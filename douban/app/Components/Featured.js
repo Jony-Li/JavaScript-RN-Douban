@@ -1,26 +1,20 @@
 import React,{Component} from 'react';
-import MovieList from './MoveList';
+import MovieList from './MovieList';
 import styles from '../Styles/Main';
 import {
     View,
     Text,
-    Navigator,
 } from 'react-native';
+import {Navigator} from "react-native-deprecated-custom-components"
+
 
 class Featured extends Component{
     render(){
         return(
             <Navigator
-                style={styles.container}
-                initialRoute={{
-                    title:'推荐电影',
-                    component:MovieList
-                }}
-            />
 
+            />
         );
     }
-    
-
 }
 export {Featured as default}

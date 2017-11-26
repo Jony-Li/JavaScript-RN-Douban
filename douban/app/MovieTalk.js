@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import MoveList from './Components/MoveList';
+import MovieList from './Components/MovieList';
 import USBox from './Components/USBox';
 import Featured from './Components/Featured';
 import {
