@@ -14,7 +14,7 @@ class MovieTalk extends Component {
     }
     render() {
         return (
-            <Featured/>
+            <MovieList/>
         );
     }
 }

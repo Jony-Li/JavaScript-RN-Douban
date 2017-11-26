@@ -5,7 +5,7 @@ import {
     View,
     Text,
 } from 'react-native';
-import {Navigator} from "react-native-deprecated-custom-components"
+//import {Navigator} from "react-native-deprecated-custom-components"
 
 
 class Featured extends Component{
