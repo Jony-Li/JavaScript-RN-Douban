@@ -47,7 +47,6 @@ class MovieList extends Component{
                 });
             }).done();
     }
-
     showMovieDetail(movie){
         alert(movie.title);
         this.props.navigator.push({

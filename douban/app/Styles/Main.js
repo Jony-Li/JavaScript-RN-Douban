@@ -3,6 +3,22 @@ import {
     StyleSheet
 } from 'react-native';
 const styles = StyleSheet.create({
+    tabBar:{
+        backgroundColor:'#6435c9',
+    },
+    tabText:{
+        //color:'#000000',
+        fontSize:10
+    },
+    selectedTabText:{
+        color:'#ffffff'
+    },
+    tabIcon:{
+        marginTop:25,
+        marginBottom:-5,
+        width:33,
+        height:33
+    },
     processText:{
         color:'#6435c9',
         fontSize:12,
