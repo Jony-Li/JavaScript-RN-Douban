@@ -8,13 +8,14 @@
 	},
 	"dependencies": {
 		"react": "16.0.0",
-		"react-native": "0.50.4"
+		"react-native": "0.50.4",
+		"react-native-deprecated-custom-components": "git+https://github.com/facebookarchive/react-native-custom-components.git"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",
 		"babel-preset-react-native": "4.0.0",
 		"jest": "21.2.1",
-		"react-native-deprecated-custom-components": "^0.1.1",
+		"prop-types": "^15.6.0",
 		"react-native-tab-navigator": "^0.3.4",
 		"react-test-renderer": "16.0.0"
 	},

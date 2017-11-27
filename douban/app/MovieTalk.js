@@ -41,7 +41,7 @@ class MovieTalk extends Component {
                                    renderSelectedIcon={() => <Image
                                        style={styles.tabIcon}
                                        source={{uri: icons.starActive}}/>}>
-                    <Featured/>
+                    <MovieList/>
                 </TabNavigator.Item>
                 <TabNavigator.Item selected={this.state.selectedTab === 'us_box'}
                                    title='欧美院线'
