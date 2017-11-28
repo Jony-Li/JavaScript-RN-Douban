@@ -13,10 +13,9 @@ import {Navigator} from 'react-native-deprecated-custom-components';
 
 class Featured extends Component {
     render() {
-        {/* <View style={styles.container}><Text>Featured</Text></View>*/
-        }
+        {/* <View style={styles.container}><Text>Featured</Text></View>*/}
         const routes = [
-            {title: '推荐电影', index: 0,component:MovieList},
+            {title: '推荐电影', index: 0, component: MovieList},
             {title: 'Second Scene', index: 1},
         ];
 
@@ -37,7 +36,8 @@ class Featured extends Component {
                     </TouchableHighlight>
                 }
                 style={{padding: 100}}
-            />*/}
+            />*/
+        }
 
         {/* TouchableHighlight onPress={() => {
                         if (route.index === 0) {
@@ -49,17 +49,22 @@ class Featured extends Component {
                         }
                     }}>
                         <Text>{route.title}</Text>
-                    </TouchableHighlight>*/}
+                    </TouchableHighlight>*/
+        }
 
 
         return (
             <Navigator
-                initialRoute={routes[0]}
-                initialRouteStack={routes}
-                renderScene={(route, navigator) =>
-                    <MovieList title={route.title}/>
+                initialRoute={{name: "推荐电影", component: MovieList}}
+                configureScene={(route) => {
+                    return Navigator.SceneConfigs.PushFromRight;
+                }}
+                renderScene={(route, navigator) => {
+                    let Component = route.component;
+                    return <Component {...route.props} navigator={navigator}/>
+                    }
                 }
-                style={{padding: 0}}
+                style={{paddingTop: 0,backgroundColor:'#6435c9'}}
             />
         );
     }

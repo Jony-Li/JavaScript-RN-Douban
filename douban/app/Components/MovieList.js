@@ -48,10 +48,11 @@ class MovieList extends Component{
             }).done();
     }
     showMovieDetail(movie){
-        alert(movie.title);
+        //alert(movie.title);
         this.props.navigator.push({
             title:movie.title,
             component:MovieDetail,
+            passProps:{movie},
         });
     }
     /*

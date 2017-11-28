@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
         fontSize:15,
     },
     itemText: {
-        fontSize: 33,
+        fontSize: 16,
         fontFamily: 'Helvetica Neue',
-        fontWeight: '200',
-        color: "#6435c9",
-        padding: 30,
+        fontWeight: '300',
+        color: "rgba(0,0,0,0.8)",
+        lineHeight:26,
     },
     container:{
         flex:1,
