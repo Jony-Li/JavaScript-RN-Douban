@@ -15,5 +15,8 @@
 ```
 * **TouchableHighlight :** 坑点1. 只支持一个子节点； 坑点2. 没有添加onPress 不会有touch效果。
 
+## Android IOS跨平台运行
+* **Android :**  在Android Studio中直接导入douban目录下的android文件[该目录是Android Studio工程]，并重新clean build运行
+
 # 豆瓣电影列表展示
 ![image](https://github.com/Jony-Li/JavaScript-RN-Douban/blob/master/douban/JavaScript-RN-Douban.gif)
