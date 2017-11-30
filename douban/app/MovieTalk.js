@@ -4,6 +4,7 @@ import USBox from './Components/USBox';
 import Featured from './Components/Featured';
 import styles from './Styles/Main';
 import icons from './Assets/Icons';
+import {Navigator} from 'react-native-deprecated-custom-components';
 
 import {
     View,
@@ -37,11 +38,19 @@ class MovieTalk extends Component {
                                    renderIcon={() => <Image
                                        style={styles.tabIcon}
                                        source={{uri: icons.star}}/>}
-
                                    renderSelectedIcon={() => <Image
                                        style={styles.tabIcon}
                                        source={{uri: icons.starActive}}/>}>
-                    <Featured/>
+                    <Navigator
+                        initialRoute={{ name: "推荐电影", component: Featured }}
+                        configureScene={(route) => {
+                            return Navigator.SceneConfigs.PushFromRight;
+                        }}
+                        renderScene={(route, navigator) => {
+                            let Component = route.component;
+                            return <Component {...route} navigator={navigator} {...route.passProps} />
+                        }}
+                    />
                 </TabNavigator.Item>
                 <TabNavigator.Item selected={this.state.selectedTab === 'us_box'}
                                    title='欧美院线'

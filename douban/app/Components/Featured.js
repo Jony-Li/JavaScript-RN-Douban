@@ -53,8 +53,7 @@ class Featured extends Component {
         }
 
 
-        return (
-            <Navigator
+        {/*            <Navigator
                 initialRoute={{name: "推荐电影", component: MovieList}}
                 configureScene={(route) => {
                     return Navigator.SceneConfigs.PushFromRight;
@@ -65,7 +64,10 @@ class Featured extends Component {
                     }
                 }
                 style={{paddingTop: 0,backgroundColor:'#6435c9'}}
-            />
+            />*/}
+
+        return (
+            <MovieList navigator={this.props.navigator}/>
         );
     }
 }

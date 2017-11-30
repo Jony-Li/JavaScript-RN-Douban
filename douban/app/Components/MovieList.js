@@ -48,7 +48,7 @@ class MovieList extends Component{
             }).done();
     }
     showMovieDetail(movie){
-        //alert(movie.title);
+        //alert(movie.id);
         this.props.navigator.push({
             title:movie.title,
             component:MovieDetail,

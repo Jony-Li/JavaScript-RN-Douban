@@ -9,16 +9,18 @@ import {
     ActivityIndicator,
     TouchableHighlight,
     Touchable,
+    TouchableOpacity
 } from 'react-native';
 
 class MovieDetail extends Component{
     constructor(props){
-        super(props)
+        super(props);
         this.state={
             movieDetail:'',
         }
-        //const REQUEST_URL=`https://api.douban.com/v2/movie/subject/${this.props.movie.id}`;
-        const REQUEST_URL=`https://api.douban.com/v2/movie/subject/1292063`;
+        //alert(this.props.movie.id);//undefined
+        const REQUEST_URL=`https://api.douban.com/v2/movie/subject/${this.props.movie.id}`;
+        //const REQUEST_URL=`https://api.douban.com/v2/movie/subject/1292063`;
         this.fetchData(REQUEST_URL);
     }
     fetchData(REQUEST_URL){
@@ -44,14 +46,16 @@ class MovieDetail extends Component{
 
         }
         return(
+            <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' style={styles.container} onPress={()=> {this.props.navigator.pop()}} >
             <View style={styles.container}>
-                <ScrollView style={[styles.item,{flexDirection:'column'}]}>
+                <ScrollView style={[styles.item,{flexDirection:'column'}]} >
 {/*                    <Text style={styles.itemText}>
                         {this.state.movieDetail.summary}
                     </Text>*/}
                     {summary}
                 </ScrollView>
             </View>
+            </TouchableHighlight>
         );
     }
 }
