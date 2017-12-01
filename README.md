@@ -23,6 +23,28 @@
 ```
 * **TouchableHighlight :** 坑点1. 只支持一个子节点； 坑点2. 没有添加onPress 不会有touch效果。
 
+* **Navigator :** push跳转后this.props.movie取值为undefined。
+```jsx
+this.props.navigator.push({
+    title:movie.title,
+    component:MovieDetail,
+    passProps:{movie},
+
+```
+根本原因是需要在Navigato的renderScene添加passProps属性。
+```jsx
+    <Navigator
+	initialRoute={{ name: "推荐电影", component: Featured }}
+	configureScene={(route) => {
+	    return Navigator.SceneConfigs.PushFromRight;
+	}}
+	renderScene={(route, navigator) => {
+	    let Component = route.component;
+	    return <Component {...route} navigator={navigator} {...route.passProps} />
+	}}
+    />
+```
+
 ## Android IOS跨平台运行
 * **Android :**  在Android Studio中直接导入douban目录下的android文件（该目录是Android Studio工程），并重新clean build运行。
 
