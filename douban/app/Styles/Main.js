@@ -3,6 +3,20 @@ import {
     StyleSheet
 } from 'react-native';
 const styles = StyleSheet.create({
+    detailNavBar:{
+        flexDirection:'row',
+        backgroundColor:'#6435c9',
+        height:50,
+    },
+    navBar:{
+        height:50,
+        backgroundColor:'#6435c9',
+        textAlign:'center',
+        color:"#ffffff",
+        paddingTop:8,
+        fontSize:20,
+        fontFamily: 'Helvetica Neue',
+    },
     tabBar:{
         backgroundColor:'#6435c9',
     },

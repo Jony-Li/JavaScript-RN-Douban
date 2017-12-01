@@ -1,5 +1,6 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import styles from '../Styles/Main';
+import icons from '../Assets/Icons';
 import {
     View,
     Text,
@@ -12,51 +13,67 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-class MovieDetail extends Component{
-    constructor(props){
+class MovieDetail extends Component {
+    constructor(props) {
         super(props);
-        this.state={
-            movieDetail:'',
+        this.state = {
+            movieDetail: '',
         }
         //alert(this.props.movie.id);//undefined
-        const REQUEST_URL=`https://api.douban.com/v2/movie/subject/${this.props.movie.id}`;
+        const REQUEST_URL = `https://api.douban.com/v2/movie/subject/${this.props.movie.id}`;
         //const REQUEST_URL=`https://api.douban.com/v2/movie/subject/1292063`;
         this.fetchData(REQUEST_URL);
     }
-    fetchData(REQUEST_URL){
+
+    fetchData(REQUEST_URL) {
         fetch(REQUEST_URL)
             .then(response => response.json())
             .then(responseData => {
                 this.setState({
-                    movieDetail:responseData,
+                    movieDetail: responseData,
                 });
             }).done();
     }
-    render(){
+
+    render() {
         let movie = this.state.movieDetail;
         //alert(movie.summary);
-        if (movie.summary !== undefined){
-            var summary = movie.summary.split(/\n/).map( p => {
-                return(
-                    <View style={{marginBottom:15,paddingLeft:6,paddingRight:6}}>
+        if (movie.summary !== undefined) {
+            var summary = movie.summary.split(/\n/).map(p => {
+                return (
+                    <View style={{marginBottom: 15, paddingLeft: 6, paddingRight: 6}}>
                         <Text style={styles.itemText}>{p}</Text>
                     </View>
                 );
             });
 
         }
-        return(
-            <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' style={styles.container} onPress={()=> {this.props.navigator.pop()}} >
+        return (
             <View style={styles.container}>
-                <ScrollView style={[styles.item,{flexDirection:'column'}]} >
-{/*                    <Text style={styles.itemText}>
+                <View style={styles.detailNavBar}>
+                    <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={() => {
+                        this.props.navigator.pop()
+                    }}>
+                        <Image source={{uri: icons.backHome}} style={{width: 48, height: 48}}/>
+                    </TouchableHighlight>
+                    <Text style={[styles.navBar, {
+                        paddingTop: 12,
+                        paddingLeft: -20,
+                        textAlign: 'center',
+                        flex: 1
+                    }]}>{this.props.title}</Text>
+                </View>
+
+                <ScrollView style={[styles.item, {flexDirection: 'column'}]}>
+                    {/*                    <Text style={styles.itemText}>
                         {this.state.movieDetail.summary}
                     </Text>*/}
                     {summary}
                 </ScrollView>
             </View>
-            </TouchableHighlight>
+
         );
     }
 }
+
 export {MovieDetail as default};

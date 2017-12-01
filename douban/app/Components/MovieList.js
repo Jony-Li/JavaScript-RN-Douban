@@ -99,6 +99,7 @@ class MovieList extends Component{
         }
         return(
             <View style={styles.container}>
+                <Text style={[styles.navBar]}>推荐电影</Text>
                 <ListView
                     dataSource={this.state.movies}
                     renderRow={this.renderMovieList.bind(this)}
