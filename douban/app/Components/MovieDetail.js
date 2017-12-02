@@ -54,12 +54,11 @@ class MovieDetail extends Component {
                     <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={() => {
                         this.props.navigator.pop()
                     }}>
-                        <Image source={{uri: icons.backHome}} style={{width: 48, height: 48}}/>
+                        <Image source={{uri: icons.backHome}} style={styles.backIcon}/>
                     </TouchableHighlight>
                     <Text style={[styles.navBar, {
                         paddingTop: 12,
                         paddingLeft: -20,
-                        textAlign: 'center',
                         flex: 1
                     }]}>{this.props.title}</Text>
                 </View>

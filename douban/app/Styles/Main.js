@@ -3,14 +3,20 @@ import {
     StyleSheet
 } from 'react-native';
 const styles = StyleSheet.create({
+    backIcon:{
+        width:22,
+        height:22,
+        marginLeft:8,
+        marginTop:15,
+    },
     detailNavBar:{
         flexDirection:'row',
-        backgroundColor:'#6435c9',
+        backgroundColor:'#2AA145',
         height:50,
     },
     navBar:{
         height:50,
-        backgroundColor:'#6435c9',
+        backgroundColor:'#2AA145',
         textAlign:'center',
         color:"#ffffff",
         paddingTop:8,
@@ -18,7 +24,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica Neue',
     },
     tabBar:{
-        backgroundColor:'#6435c9',
+        backgroundColor:'#2AA145',
     },
     tabText:{
         //color:'#000000',
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
         height:33
     },
     processText:{
-        color:'#6435c9',
+        color:'#2AA145',
         fontSize:12,
     },
     loading:{
@@ -44,13 +50,13 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 80,
-        height: 100,
+        height: 130,
         margin: 6,
     },
     item: {
         flexDirection:'row',//设置主轴方向
         borderBottomWidth:1,
-        borderColor: "rgba(100,53,201,0.5)",
+        borderColor: "rgba(71, 71, 71,0.1)",
         paddingBottom:6,
         paddingTop:6,
         flex: 1
@@ -63,18 +69,20 @@ const styles = StyleSheet.create({
     itemHeader:{
         fontSize:18,
         fontFamily:'Helvetica Neue',
-        fontWeight:'300',
-        color:'#6435c9',
+        fontWeight:'bold',
+        color:'rgba(0,0,0,0.7)',
         marginBottom:6,
     },
     itemMeta:{
-        fontSize:16,
-        color:'rgba(0,0,0,0.6)',
+        fontSize:11,
+        color:'rgba(0,0,0,0.5)',
         marginBottom:6,
     },
-    redText:{
-        color:"#db2828",
-        fontSize:15,
+    ratingText:{
+        color:'rgba(0,0,0,0.6)',
+        paddingLeft:5,
+        paddingTop:-10,
+        fontSize:12,
     },
     itemText: {
         fontSize: 16,
@@ -85,7 +93,7 @@ const styles = StyleSheet.create({
     },
     container:{
         flex:1,
-        backgroundColor:'#eae7ff',
+        backgroundColor:'#ffffff',
         justifyContent:'space-around',
     }
 })

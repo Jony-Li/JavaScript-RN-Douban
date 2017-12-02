@@ -81,7 +81,7 @@ class USBox extends Component{
                     <View style={styles.loading}>
                         {/*设置进度条 颜色 大小*/}
                         <ActivityIndicator
-                            color="#6435c9"
+                            color="#2AA145"
                             size="large"/>
                         <Text style={styles.processText}>加载中……</Text>
                     </View>

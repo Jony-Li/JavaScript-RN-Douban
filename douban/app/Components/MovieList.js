@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import styles from '../Styles/Main';
 import MovieDetail from './MovieDetail';
+import icons from '../Assets/Icons';
 import {
     View,
     Text,
@@ -8,9 +9,12 @@ import {
     ListView,
     ActivityIndicator,
     TouchableHighlight,
+    TouchableOpacity,
+    Dimensions,
 } from 'react-native';
 
 const REQUEST_URL = 'https://api.douban.com/v2/movie/top250';
+var {width, height} = Dimensions.get('window');
 class MovieList extends Component{
     constructor(props){
         super(props);
@@ -41,6 +45,8 @@ class MovieList extends Component{
         fetch(REQUEST_URL)
             .then(response => response.json())
             .then(responseData => {
+                console.log('fetchData......' + " responseData: " + responseData);
+                //console.dir(responseData.subjects);
                 this.setState({
                     movies:this.state.movies.cloneWithRows(responseData.subjects),
                     loaded:true,//表示数据已经获取到
@@ -63,7 +69,7 @@ class MovieList extends Component{
     * */
     renderMovieList(movie){
         return(
-            <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={() => this.showMovieDetail(movie)}>
+            <TouchableHighlight underlayColor='rgba(0,0,0,0.1)' onPress={() => this.showMovieDetail(movie)}>
                 <View style={styles.item}>
                     <View style={styles.itemImage}>
                         <Image source={{uri:movie.images.large}}
@@ -72,16 +78,57 @@ class MovieList extends Component{
                     </View>
                     <View style={styles.itemContent}>
                         <Text style={styles.itemHeader}>{movie.title}</Text>
-                        <Text style={styles.itemMeta}>
+                        {/*<Text style={styles.itemMeta}>
                             {movie.original_title} ({movie.year})
+                        </Text>*/}
+                        <View style={{flexDirection: 'row', width: width, height: 20, marginBottom: 4,paddingTop:3}}>
+                            {this._renderBody(movie.rating.average)}
+                            <Text style={styles.ratingText}>
+                                {movie.rating.average}
+                            </Text>
+                        </View>
+                        <Text style={styles.itemMeta}>
+                            导演：{movie.directors[0].name}
                         </Text>
-                        <Text style={styles.redText}>
-                            {movie.rating.average}
+                        <Text style={styles.itemMeta}>
+                            主演：{movie.casts[0].name}/{ movie.casts[1].name}
                         </Text>
+
                     </View>
                 </View>
             </TouchableHighlight>
         );
+    }
+    //绘制评分组件
+    _renderBody(rating) {
+        //rating = 6;
+        let pointNum = rating.toString().split('.');
+        pointNum = pointNum[1];
+        let halfStar = Math.floor(rating)%2;
+        console.log("rating: " + rating + " pointNum: "+pointNum + " halfStar:" + halfStar);
+        let stars = Math.floor(Math.floor(rating)/2)+ ( halfStar>0?0.5:0) + (pointNum>=5?0.5:0);
+        console.log("stars:" + stars);
+        let images = [];
+        for (var i = 1; i <= 5; i++) {
+            if(i<=stars){
+                images.push(
+                    <View key={'i' + i}>
+                        <Image source={{uri: icons.starOn, width: 13, height: 13}}/>
+                    </View>);
+            }/*else if(i-0.5<= stars <i){
+                images.push(
+                    <View key={'i' + i}>
+                        <Image source={{uri: icons.starHalf, width: 13, height: 13}}/>
+                    </View>);
+                break;
+            }*/else {
+                images.push(
+                    <View key={'i' + i}>
+                        <Image source={{uri: icons.starOff, width: 13, height: 13}}/>
+                    </View>);
+            }
+        }
+        return images;
     }
     render(){
         if (!this.state.loaded){
@@ -90,7 +137,7 @@ class MovieList extends Component{
                     <View style={styles.loading}>
                         {/*设置进度条 颜色 大小*/}
                         <ActivityIndicator
-                            color="#6435c9"
+                            color="#2AA145"
                             size="large"/>
                         <Text style={styles.processText}>加载中……</Text>
                     </View>
