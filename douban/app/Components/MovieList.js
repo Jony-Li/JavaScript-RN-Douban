@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import styles from '../Styles/Main';
 import MovieDetail from './MovieDetail';
 import icons from '../Assets/Icons';
@@ -15,14 +15,15 @@ import {
 
 const REQUEST_URL = 'https://api.douban.com/v2/movie/top250';
 var {width, height} = Dimensions.get('window');
-class MovieList extends Component{
-    constructor(props){
+
+class MovieList extends Component {
+    constructor(props) {
         super(props);
-        this.state ={
-            movies:new ListView.DataSource({
-                rowHasChanged:(row1,row2) => row1 !== row2
+        this.state = {
+            movies: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2
             }),
-            loaded:false,//设置数据加载动画
+            loaded: false,//设置数据加载动画
         }
         this.fetchData();
         //处理模拟数据
@@ -41,38 +42,41 @@ class MovieList extends Component{
                     movies:dataSource.cloneWithRows(movies),
                 }*/
     }
-    fetchData(){
+
+    fetchData() {
         fetch(REQUEST_URL)
             .then(response => response.json())
             .then(responseData => {
                 console.log('fetchData......' + " responseData: " + responseData);
                 //console.dir(responseData.subjects);
                 this.setState({
-                    movies:this.state.movies.cloneWithRows(responseData.subjects),
-                    loaded:true,//表示数据已经获取到
+                    movies: this.state.movies.cloneWithRows(responseData.subjects),
+                    loaded: true,//表示数据已经获取到
                 });
             }).done();
     }
-    showMovieDetail(movie){
+
+    showMovieDetail(movie) {
         //alert(movie.id);
         this.props.navigator.push({
-            title:movie.title,
-            component:MovieDetail,
-            passProps:{movie},
+            title: movie.title,
+            component: MovieDetail,
+            passProps: {movie},
         });
     }
+
     /*
     * TouchableHighlight
     * 坑点1. 只支持一个子节点
     * 坑点2. 没有添加onPress 不会有touch效果
     *
     * */
-    renderMovieList(movie){
-        return(
+    renderMovieList(movie) {
+        return (
             <TouchableHighlight underlayColor='rgba(0,0,0,0.1)' onPress={() => this.showMovieDetail(movie)}>
                 <View style={styles.item}>
                     <View style={styles.itemImage}>
-                        <Image source={{uri:movie.images.large}}
+                        <Image source={{uri: movie.images.large}}
                                style={styles.image}
                         />
                     </View>
@@ -81,8 +85,8 @@ class MovieList extends Component{
                         {/*<Text style={styles.itemMeta}>
                             {movie.original_title} ({movie.year})
                         </Text>*/}
-                        <View style={{flexDirection: 'row', width: width, height: 20, marginBottom: 4,paddingTop:3}}>
-                            {this._renderBody(movie.rating.average)}
+                        <View style={{flexDirection: 'row', width: width, height: 20, marginBottom: 4, paddingTop: 3}}>
+                            {this._renderStar(movie.rating.average)}
                             <Text style={styles.ratingText}>
                                 {movie.rating.average}
                             </Text>
@@ -91,7 +95,7 @@ class MovieList extends Component{
                             导演：{movie.directors[0].name}
                         </Text>
                         <Text style={styles.itemMeta}>
-                            主演：{movie.casts[0].name}/{ movie.casts[1].name}
+                            主演：{movie.casts[0].name}/{movie.casts[1].name}
                         </Text>
 
                     </View>
@@ -100,28 +104,34 @@ class MovieList extends Component{
         );
     }
     //绘制评分组件
-    _renderBody(rating) {
-        //rating = 6;
+    _renderStar(rating) {
+        //rating = 0.4;
         let pointNum = rating.toString().split('.');
         pointNum = pointNum[1];
-        let halfStar = Math.floor(rating)%2;
-        console.log("rating: " + rating + " pointNum: "+pointNum + " halfStar:" + halfStar);
-        let stars = Math.floor(Math.floor(rating)/2)+ ( halfStar>0?0.5:0) + (pointNum>=5?0.5:0);
+        let halfStar = Math.floor(rating) % 2;
+        console.log("rating: " + rating + " pointNum: " + pointNum + " halfStar:" + halfStar);
+        let stars = Math.floor(Math.floor(rating) / 2) + ( halfStar > 0 ? 0.5 : 0) + (pointNum >= 5 ? 0.5 : 0);
         console.log("stars:" + stars);
         let images = [];
+        let drawHalfStar = true;
+        if (Math.floor(stars) == stars) drawHalfStar = false;
+        let flag = true;
         for (var i = 1; i <= 5; i++) {
-            if(i<=stars){
+            if (i <= stars && stars > 0.5) {
                 images.push(
                     <View key={'i' + i}>
                         <Image source={{uri: icons.starOn, width: 13, height: 13}}/>
                     </View>);
-            }/*else if(i-0.5<= stars <i){
+            } else if (((0 < stars && stars < 1.5) && flag == true) || ((i - 0.5 <= stars && stars < i) && drawHalfStar == true )) {
                 images.push(
                     <View key={'i' + i}>
                         <Image source={{uri: icons.starHalf, width: 13, height: 13}}/>
                     </View>);
-                break;
-            }*/else {
+                drawHalfStar = false;
+                if (0 < stars < 1.5) {
+                    flag = false;
+                }
+            } else {
                 images.push(
                     <View key={'i' + i}>
                         <Image source={{uri: icons.starOff, width: 13, height: 13}}/>
@@ -130,9 +140,10 @@ class MovieList extends Component{
         }
         return images;
     }
-    render(){
-        if (!this.state.loaded){
-            return(
+
+    render() {
+        if (!this.state.loaded) {
+            return (
                 <View style={styles.container}>
                     <View style={styles.loading}>
                         {/*设置进度条 颜色 大小*/}
@@ -144,7 +155,7 @@ class MovieList extends Component{
                 </View>
             );
         }
-        return(
+        return (
             <View style={styles.container}>
                 <Text style={[styles.navBar]}>推荐电影</Text>
                 <ListView
@@ -158,6 +169,7 @@ class MovieList extends Component{
         );
     }
 }
+
 export {MovieList as default}
 
 

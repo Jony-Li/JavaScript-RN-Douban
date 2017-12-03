@@ -4,9 +4,11 @@ import {
 } from 'react-native';
 const styles = StyleSheet.create({
     backIcon:{
-        width:22,
+        width:32,
         height:22,
         marginLeft:8,
+        paddingRight:10,
+        marginRight:10,
         marginTop:15,
     },
     detailNavBar:{
