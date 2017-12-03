@@ -53,6 +53,11 @@ class MovieTalk extends Component {
                     />
                 </TabNavigator.Item>
                 <TabNavigator.Item selected={this.state.selectedTab === 'us_box'}
+                                   onPress={() => {
+                                       this.setState({
+                                           selectedTab: 'us_box',
+                                       });
+                                   }}
                                    title='欧美院线'
                                    titleStyle={styles.tabText}
                                    selectedTitleStyle={styles.selectedTabText}
@@ -61,14 +66,17 @@ class MovieTalk extends Component {
                                        source={{uri: icons.list}}/>}
                                    renderSelectedIcon={() => <Image
                                        style={styles.tabIcon}
-                                       source={{uri: icons.listActive}}/>}
-                                   onPress={() => {
-                                       this.setState({
-                                           selectedTab: 'us_box',
-                                       });
-                                   }}
-                >
-                    <USBox/>
+                                       source={{uri: icons.listActive}}/>}>
+                    <Navigator
+                        initialRoute={{ name: "推荐电影", component: USBox }}
+                        configureScene={(route) => {
+                            return Navigator.SceneConfigs.PushFromRight;
+                        }}
+                        renderScene={(route, navigator) => {
+                            let Component = route.component;
+                            return <Component {...route} navigator={navigator} {...route.passProps} />
+                        }}
+                    />
                 </TabNavigator.Item>
             </TabNavigator>
         );

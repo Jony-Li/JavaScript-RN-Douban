@@ -1,15 +1,20 @@
 import React,{Component} from 'react';
 import styles from '../Styles/Main';
+import icons from '../Assets/Icons';
+//import MovieDetail from './MovieDetail';
 import {
     View,
     Text,
     Image,
     ListView,
     ActivityIndicator,
+    TouchableOpacity,
     TouchableHighlight,
+    Dimensions
 } from 'react-native';
 
 const REQUEST_URL = 'https://api.douban.com/v2/movie/us_box';
+var {width, height} = Dimensions.get('window');
 class USBox extends Component{
     constructor(props){
         super(props);
@@ -46,6 +51,14 @@ class USBox extends Component{
                 });
             }).done();
     }
+    showMovieDetail(movie) {
+        alert(movie.subject.title);
+        /*this.props.navigator.push({
+            title: movie.subject.title,
+            component: MovieDetail,
+            passProps: {movie},
+        });*/
+    }
     /*
     * TouchableHighlight
     * 坑点1. 只支持一个子节点
@@ -53,26 +66,75 @@ class USBox extends Component{
     *
     * */
     renderMovieList(movie){
-        return(
-            <TouchableHighlight underlayColor='rgba(34,26,38,0.1)' onPress={() => {alert(movie.subject.title);console.log(`《${movie.subject.title}》被点击了`)}}>
+        return (
+            <TouchableHighlight underlayColor='rgba(0,0,0,0.1)' onPress={() => this.showMovieDetail(movie)}>
                 <View style={styles.item}>
                     <View style={styles.itemImage}>
-                        <Image source={{uri:movie.subject.images.large}}
+                        <Image source={{uri: movie.subject.images.large}}
                                style={styles.image}
                         />
                     </View>
                     <View style={styles.itemContent}>
                         <Text style={styles.itemHeader}>{movie.subject.title}</Text>
+                        {/*<Text style={styles.itemMeta}>
+                            {movie.original_title} ({movie.year})
+                        </Text>*/}
+                        <View style={{flexDirection: 'row', width: width, height: 20, marginBottom: 4, paddingTop: 3}}>
+                            {this._renderStar(movie.subject.rating.average)}
+                            <Text style={styles.ratingText}>
+                                {movie.subject.rating.average}
+                            </Text>
+                        </View>
                         <Text style={styles.itemMeta}>
-                            {movie.subject.original_title} ({movie.subject.year})
+                            导演：{movie.subject.directors[0].name}
                         </Text>
-                        <Text style={styles.redText}>
-                            {movie.subject.rating.average}
+                        <Text style={styles.itemMeta}>
+                            主演：{movie.subject.casts[0].name}/{movie.subject.casts[1].name}
                         </Text>
+
                     </View>
                 </View>
             </TouchableHighlight>
         );
+
+    }
+
+    //绘制评分组件
+    _renderStar(rating) {
+        //rating = 0.4;
+        let pointNum = rating.toString().split('.');
+        pointNum = pointNum[1];
+        let halfStar = Math.floor(rating) % 2;
+        console.log("rating: " + rating + " pointNum: " + pointNum + " halfStar:" + halfStar);
+        let stars = Math.floor(Math.floor(rating) / 2) + ( halfStar > 0 ? 0.5 : 0) + (pointNum >= 5 ? 0.5 : 0);
+        console.log("stars:" + stars);
+        let images = [];
+        let drawHalfStar = true;
+        if (Math.floor(stars) == stars) drawHalfStar = false;
+        let flag = true;
+        for (var i = 1; i <= 5; i++) {
+            if (i <= stars && stars > 0.5) {
+                images.push(
+                    <View key={'i' + i}>
+                        <Image source={{uri: icons.starOn, width: 13, height: 13}}/>
+                    </View>);
+            } else if (((0 < stars && stars < 1.5) && flag == true) || ((i - 0.5 <= stars && stars < i) && drawHalfStar == true )) {
+                images.push(
+                    <View key={'i' + i}>
+                        <Image source={{uri: icons.starHalf, width: 13, height: 13}}/>
+                    </View>);
+                drawHalfStar = false;
+                if (0 < stars < 1.5) {
+                    flag = false;
+                }
+            } else {
+                images.push(
+                    <View key={'i' + i}>
+                        <Image source={{uri: icons.starOff, width: 13, height: 13}}/>
+                    </View>);
+            }
+        }
+        return images;
     }
     render(){
         if (!this.state.loaded){
@@ -92,7 +154,7 @@ class USBox extends Component{
             <View style={styles.container}>
                 <ListView
                     dataSource={this.state.movies}
-                    renderRow={this.renderMovieList}
+                    renderRow={this.renderMovieList.bind(this)}
                     /* renderRow={
                         movie => <Text style={styles.itemText}>{movie.title}</Text>
                     }*/
