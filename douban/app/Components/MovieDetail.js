@@ -56,11 +56,7 @@ class MovieDetail extends Component {
                     }}>
                         <Image source={{uri: icons.backHome}} style={styles.backIcon}/>
                     </TouchableHighlight>
-                    <Text style={[styles.navBar, {
-                        paddingTop: 12,
-                        paddingLeft: -20,
-                        flex: 1
-                    }]}>{this.props.title}</Text>
+                    <Text style={styles.detailNavBarText}>{this.props.title}</Text>
                 </View>
 
                 <ScrollView style={[styles.item, {flexDirection: 'column'}]}>
