@@ -44,6 +44,12 @@ this.props.navigator.push({
 	}}
     />
 ```
+* **Android代码修改后白屏 :** 1. 安装更改代码后的APK到手机; 2.停止react 服务,打开手机中的APK——不会白屏; 3.运行react-native start 
+启动服务,再开始编辑js代码，进行实时部署。
+
+* **TouchableHighlight异常问题 :** "Attempted to transition from state `RESPONDER_INACTIVE_PRESS_IN` to `RESPONDER_ACTIVE_LONG_PRESS_IN`, 
+which is not supported."解决办法:这是开启了Debug JS Remotely模式,关闭它就好了.(文本信息要加入点击
+事件,请用TouchableOpacity包裹)。
 
 ## Android IOS跨平台运行
 * **Android :**  在Android Studio中直接导入douban目录下的android文件（该目录是Android Studio工程），并重新clean build运行。
