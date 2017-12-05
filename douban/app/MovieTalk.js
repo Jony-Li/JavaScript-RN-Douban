@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MovieList from './Components/MovieList';
 import USBox from './Components/USBox';
 import Featured from './Components/Featured';
+import Search from './Components/Search';
 import styles from './Styles/Main';
 import icons from './Assets/Icons';
 import {Navigator} from 'react-native-deprecated-custom-components';
@@ -18,7 +19,7 @@ class MovieTalk extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: 'featured'
+            selectedTab: 'search'
         };
     }
 
@@ -69,6 +70,32 @@ class MovieTalk extends Component {
                                        source={{uri: icons.listActive}}/>}>
                     <Navigator
                         initialRoute={{ name: "推荐电影", component: USBox }}
+                        configureScene={(route) => {
+                            return Navigator.SceneConfigs.PushFromRight;
+                        }}
+                        renderScene={(route, navigator) => {
+                            let Component = route.component;
+                            return <Component {...route} navigator={navigator} {...route.passProps} />
+                        }}
+                    />
+                </TabNavigator.Item>
+                <TabNavigator.Item selected={this.state.selectedTab === 'search'}
+                                   onPress={() => {
+                                       this.setState({
+                                           selectedTab: 'search',
+                                       });
+                                   }}
+                                   title='搜索'
+                                   titleStyle={styles.tabText}
+                                   selectedTitleStyle={styles.selectedTabText}
+                                   renderIcon={() => <Image
+                                       style={styles.tabIcon}
+                                       source={{uri: icons.search}}/>}
+                                   renderSelectedIcon={() => <Image
+                                       style={styles.tabIcon}
+                                       source={{uri: icons.searchActive}}/>}>
+                    <Navigator
+                        initialRoute={{ name: "搜索", component: Search }}
                         configureScene={(route) => {
                             return Navigator.SceneConfigs.PushFromRight;
                         }}

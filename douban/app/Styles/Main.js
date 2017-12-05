@@ -4,6 +4,13 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
+    searchView:{
+        paddingTop:2,
+        paddingLeft:7,
+        paddingRight:7,
+        borderColor:'rgba(0,0,0,0.1)',
+        borderBottomWidth:1,
+    },
     detailNavBarText: {
         fontSize: 20,
         color: "#ffffff",
