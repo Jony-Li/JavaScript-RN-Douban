@@ -114,7 +114,7 @@ class MovieList extends Component {
         console.log("stars:" + stars);
         let images = [];
         let drawHalfStar = true;
-        if (Math.floor(stars) == stars) drawHalfStar = false;
+        if (Math.floor(stars) === stars) drawHalfStar = false;
         let flag = true;
         for (var i = 1; i <= 5; i++) {
             if (i <= stars && stars > 0.5) {
@@ -122,7 +122,7 @@ class MovieList extends Component {
                     <View key={'i' + i}>
                         <Image source={{uri: icons.starOn, width: 13, height: 13}}/>
                     </View>);
-            } else if (((0 < stars && stars < 1.5) && flag == true) || ((i - 0.5 <= stars && stars < i) && drawHalfStar == true )) {
+            } else if (((0 < stars && stars < 1.5) && flag === true) || ((i - 0.5 <= stars && stars < i) && drawHalfStar === true )) {
                 images.push(
                     <View key={'i' + i}>
                         <Image source={{uri: icons.starHalf, width: 13, height: 13}}/>
